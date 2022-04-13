@@ -8,14 +8,13 @@ vector = require("libraries/vector")
 require("hud")
 dialove = require("libraries/dialove")
 bigJim = require("characters/bigJim")
+scene = require("libraries/SceneManager")
 
 love.graphics.setDefaultFilter("nearest", "nearest")
 cam = camera(player.x, player.y, 2, nil)
 
 function love.load()
-
-  gameMap = sti('assets/maps/main-area.lua')
-  world = wf.newWorld(0, 0)
+  scene:load()
   world:addCollisionClass("player")
   player:load()
   hud:load()
@@ -58,11 +57,8 @@ end
 
 function love.draw()
   cam:attach()
-    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
-    gameMap:drawLayer(gameMap.layers["Floor"])
-    gameMap:drawLayer(gameMap.layers["Bricks"])
+    scene:draw()
     player:draw()
-    gameMap:drawLayer(gameMap.layers["Lockers"])
   cam:detach()
   hud:draw()
 end
@@ -71,5 +67,8 @@ function love.keypressed(key, scancode, isrepeat)
   if key == "f11" then
     fullscreen = not fullscreen
     love.window.setFullscreen(fullscreen)
+  elseif key == "f8" then
+    scene.current = "../assets/maps/cultist-ending-main.lua"
+    print(scene.curent)
   end
 end
