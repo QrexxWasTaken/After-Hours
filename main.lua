@@ -6,7 +6,6 @@ camera = require("libraries/camera")
 wf = require("libraries/windfield")
 vector = require("libraries/vector")
 require("hud")
-dialove = require("libraries/dialove")
 bigJim = require("characters/bigJim")
 scene = require("libraries/SceneManager")
 
