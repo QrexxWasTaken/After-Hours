@@ -7,14 +7,13 @@ wf = require("libraries/windfield")
 vector = require("libraries/vector")
 require("hud")
 bigJim = require("characters/bigJim")
+scene = require("libraries/SceneManager")
 
 love.graphics.setDefaultFilter("nearest", "nearest")
 cam = camera(player.x, player.y, 2, nil)
 
 function love.load()
-
-  gameMap = sti('assets/maps/main-area.lua')
-  world = wf.newWorld(0, 0)
+  scene:load()
   world:addCollisionClass("player")
   player:load()
   hud:load()
@@ -51,24 +50,27 @@ function love.update(dt)
   player:update(dt)
   world:update(dt)
   hud:update(dt)
+  scene:update(dt)
   player.x = player.collider:getX()
   player.y = player.collider:getY()
 end
 
 function love.draw()
   cam:attach()
-    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
-    gameMap:drawLayer(gameMap.layers["Floor"])
-    gameMap:drawLayer(gameMap.layers["Bricks"])
+    scene:draw()
     player:draw()
-    gameMap:drawLayer(gameMap.layers["Lockers"])
   cam:detach()
   hud:draw()
+  love.graphics.setColor(1, 1, 1, 1.0)
+  love.graphics.rectangle("fill", love.graphics.getWidth()*2 - love.graphics.getWidth(), love.graphics.getHeight()*2 - love.graphics.getHeight(), love.graphics.getWidth()/4, love.graphics.getHeight()/4)
 end
 
 function love.keypressed(key, scancode, isrepeat)
   if key == "f11" then
     fullscreen = not fullscreen
     love.window.setFullscreen(fullscreen)
+  elseif key == "f8" then
+    scene.current = "assets/maps/main-area.lua"
+    print(scene.curent)
   end
 end

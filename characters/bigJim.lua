@@ -7,7 +7,11 @@ function bigJim:load()
     init = {
       text = "This is a test, hi!",
       title = "Big Jim",
-      image = love.graphics.newImage("assets/sprites/big-jim.png")
+      image = love.graphics.newImage("assets/sprites/big-jim.png"),
+      options = {
+        one = "Cool!",
+        two = "Awesome"
+      }
     }
   }
 end
